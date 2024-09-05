@@ -23,6 +23,19 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraft.world.damagesource.DamageSource;
 
 @Mod(HexTech.MOD_ID)
 public class HexTech
@@ -86,6 +99,9 @@ public class HexTech
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
+
+
+
     // Добавляем примерный блок-предмет во вкладку строительных блоков
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
@@ -101,6 +117,7 @@ public class HexTech
         // Делаем что-то при запуске сервера
         LOGGER.info("HELLO from server starting");
     }
+
 
     // Можно использовать EventBusSubscriber для автоматической регистрации всех статических методов в классе, аннотированном @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

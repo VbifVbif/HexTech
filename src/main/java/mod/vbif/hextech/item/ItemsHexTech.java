@@ -1,10 +1,7 @@
 package mod.vbif.hextech.item;
 
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -58,68 +55,20 @@ public class ItemsHexTech {
                 }
             }, 3, -2.4F, new Item.Properties()));
     public static final RegistryObject<Item> VIR = ITEMS.register("vir",
-            () -> new SwordItem(new Tier() {
-                @Override
-                public int getUses() {
-                    return 250;
-                }
+            () -> new Gloves(Tiers.IRON, 3, -0.5F, new Item.Properties()){
 
                 @Override
-                public float getSpeed() {
-                    return 6.0F;
+                public boolean isEnchantable(ItemStack stack) {
+                    return false;
                 }
+            });
 
-                @Override
-                public float getAttackDamageBonus() {
-                    return 3.0F;
-                }
-
-                @Override
-                public int getLevel() {
-                    return 2;
-                }
-
-                @Override
-                public int getEnchantmentValue() {
-                    return 14;
-                }
-
-                @Override
-                public Ingredient getRepairIngredient() {
-                    return Ingredient.of(Items.IRON_INGOT);
-                }
-            }, 3, -2.4F, new Item.Properties()));
 
     public static final RegistryObject<Item> VIL = ITEMS.register("vil",
-            () -> new SwordItem(new Tier() {
+            () -> new Gloves(Tiers.NETHERITE, 3, -0.5F, new Item.Properties()){
                 @Override
-                public int getUses() {
-                    return 250;
+                public boolean isEnchantable(ItemStack stack) {
+                    return false;
                 }
-
-                @Override
-                public float getSpeed() {
-                    return 6.0F;
-                }
-
-                @Override
-                public float getAttackDamageBonus() {
-                    return 3.0F;
-                }
-
-                @Override
-                public int getLevel() {
-                    return 2;
-                }
-
-                @Override
-                public int getEnchantmentValue() {
-                    return 14;
-                }
-
-                @Override
-                public Ingredient getRepairIngredient() {
-                    return Ingredient.of(Items.IRON_INGOT);
-                }
-            }, 3, -2.4F, new Item.Properties()));
+            });
 }

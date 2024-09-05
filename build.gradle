@@ -1,6 +1,8 @@
 plugins {
     id 'eclipse'
     id 'idea'
+    id 'java'
+    id 'java-library'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
@@ -60,6 +62,7 @@ minecraft {
     runs {
         // applies to all the run configs below
         configureEach {
+
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
@@ -84,11 +87,16 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
+
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -120,15 +128,25 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+    maven { url "https://maven.shedaniel.me/" }
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+    }
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
 }
 
 dependencies {
-    // Specify the version of Minecraft to use.
-    // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
-    // The "userdev" classifier will be requested and setup by ForgeGradle.
-    // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
-    // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+ minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    api(fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.118"))
+    implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:1.0.2")
+//    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
+        jarJar.ranged(it, "[0.4.1,)")
+    }
+    implementation "maven.modrinth:better-combat:1.8.6+1.20.1-forge"
 //    implementation fg.deobf('maven.modrinth:better-combat:1.8.6')
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
